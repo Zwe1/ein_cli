@@ -1,0 +1,25 @@
+{
+  "name": "ein-cli",
+  "version": "1.0.0",
+  "description": "a template generator for web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "ein": "./bin/ein"
+  },
+  "author": "Zwe1",
+  "license": "ISC",
+  "dependencies": {
+    "yeoman-generator": "^4.0.2",
+    "chalk": "^2.4.2",
+    "import-from": "^3.0.0",
+    "inquirer": "^6.5.1",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "osenv": "^0.1.5",
+    "resolve-from": "^5.0.0",
+    "yeoman-environment": "^2.4.0"
+  }
+}

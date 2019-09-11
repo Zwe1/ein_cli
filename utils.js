@@ -12,7 +12,7 @@ module.exports = class Utils {
     const pkgs = this.getInstallPkgs(targetDir);
     if (!pkgs[pkgName]) return 0;
     const latestestVersion =
-      existsSync(
+      fs.existsSync(
         `npm view ${pkgName} version --json --registry=https://registry.npm.taobao.org`
       ) + "";
     console.log("latestestVersion:", `${pkgName} ${latestestVersion}`);
@@ -29,7 +29,7 @@ module.exports = class Utils {
     const dependencies = this.getInstallPkgs(dirName, "package.json");
     Object.keys(dependencies).forEach(generator => {
       // 过滤不合规的模板
-      if (!generator.test(/^gen-/i)) delete dependencies[generator];
+      if (!/^gen-/i.test(generator)) delete dependencies[generator];
     });
 
     return dependencies;

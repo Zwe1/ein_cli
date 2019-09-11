@@ -22,12 +22,14 @@ class Instance extends Utils {
     this.checkInstruction(instruction);
     // 检验cli是否需要更新
     this.checkCliUpdate();
+    this.console(instruction, process.argv);
     // 校验通过，执行命令
-    const instructionDetail = path.resolve(
+    const instructionDetail = require(path.resolve(
       __dirname,
       instructionsDirName,
       instruction
-    );
+    ));
+
     instructionDetail.call(this);
   }
 
@@ -47,7 +49,7 @@ class Instance extends Utils {
   checkTplDir() {
     mkdir(this.dir.tpl);
     const pkgFile = path.resolve(this.dir.tpl, "package.json");
-    if (!fs.existSync(pkgFile)) {
+    if (!fs.existsSync(pkgFile)) {
       fs.writeFileSync(
         pkgFile,
         JSON.stringify({
@@ -72,21 +74,23 @@ class Instance extends Utils {
   }
 
   checkCliUpdate() {
-    const name = cliPkg.name;
+    const pkgName = cliPkg.name;
     const version = cliPkg.version;
     const latestVersion =
       execSync(
-        `npm view ${this.instruction} version --registry=https://registry.npm.taobao.org`
+        `npm view ${
+          this.instruction
+        } version --registry=https://registry.npm.taobao.org`
       ) + "";
     if (latestVersion.trim() !== version) {
       this.console(
-        `cli 版本过旧，建议执行 npm i -g ${pkgName}@latest 升级 cli： ${version} -> ${ltsVersion} `
+        `cli 版本过旧，建议执行 npm i -g ${pkgName}@latest 升级 cli： ${version} -> ${latestVersion} `
       );
     }
   }
 
-  console(log, color = "grey") {
-    console.log(chalk[color](log));
+  console(...args) {
+    console.log(this.chalk.red(...args));
   }
 }
 
